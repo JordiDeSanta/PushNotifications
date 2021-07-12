@@ -22,11 +22,10 @@ class PushNotificationsService {
   static Future initializeApp() async {
     await Firebase.initializeApp();
     token = await FirebaseMessaging.instance.getToken();
+    print(token);
 
     FirebaseMessaging.onBackgroundMessage(_onBackgroundHandler);
-
     FirebaseMessaging.onMessage.listen(_onMessageHandler);
-
     FirebaseMessaging.onMessageOpenedApp.listen(_onMessageOpenApp);
   }
 }
