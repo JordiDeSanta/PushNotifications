@@ -7,8 +7,26 @@ class PushNotificationsService {
   static FirebaseMessaging messagins = FirebaseMessaging.instance;
   static String? token;
 
+  static Future _onBackgroundHandler(RemoteMessage message) async {
+    print('onBackground Handler ${message.messageId}');
+  }
+
+  static Future _onMessageHandler(RemoteMessage message) async {
+    print('onMessage Handler ${message.messageId}');
+  }
+
+  static Future _onMessageOpenApp(RemoteMessage message) async {
+    print('onMessageOpenApp Handler ${message.messageId}');
+  }
+
   static Future initializeApp() async {
     await Firebase.initializeApp();
     token = await FirebaseMessaging.instance.getToken();
+
+    FirebaseMessaging.onBackgroundMessage(_onBackgroundHandler);
+
+    FirebaseMessaging.onMessage.listen(_onMessageHandler);
+
+    FirebaseMessaging.onMessageOpenedApp.listen(_onMessageOpenApp);
   }
 }
