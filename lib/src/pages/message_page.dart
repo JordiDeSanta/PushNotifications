@@ -5,12 +5,14 @@ class MessagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments as String;
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Message'),
         ),
         body: Center(
-          child: Text('Message Page'),
+          child: Text(args),
         ));
   }
 }
