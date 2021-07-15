@@ -15,12 +15,17 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final GlobalKey<NavigatorState> navKey = new GlobalKey<NavigatorState>();
+  final GlobalKey<ScaffoldMessengerState> scaffoldKey =
+      new GlobalKey<ScaffoldMessengerState>();
+
   @override
   void initState() {
     super.initState();
     PushNotificationsService.messagesStream.listen((m) {
       print('MyApp: $m');
-      Navigator.pushNamed(context, 'message');
+      final snackBar = SnackBar(content: Text(m));
+      scaffoldKey.currentState?.showSnackBar(snackBar);
     });
   }
 
@@ -30,6 +35,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Notifications App',
       initialRoute: 'home',
+      navigatorKey: navKey,
+      scaffoldMessengerKey: scaffoldKey,
       routes: {
         'home': (BuildContext context) => HomePage(),
         'message': (BuildContext context) => MessagePage(),
