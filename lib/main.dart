@@ -20,6 +20,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     PushNotificationsService.messagesStream.listen((m) {
       print('MyApp: $m');
+      Navigator.pushNamed(context, 'message');
     });
   }
 
